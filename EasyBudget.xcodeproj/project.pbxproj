@@ -33,6 +33,7 @@
 		073401441B7862C10065CF10 /* AddSubBudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073401431B7862C10065CF10 /* AddSubBudgetVC.swift */; };
 		0734014B1B786B3E0065CF10 /* plus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 073401491B786B3E0065CF10 /* plus.jpg */; };
 		0734014C1B786B3E0065CF10 /* minus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0734014A1B786B3E0065CF10 /* minus.jpg */; };
+		073401521B79D8030065CF10 /* TransTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073401511B79D8030065CF10 /* TransTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		073401431B7862C10065CF10 /* AddSubBudgetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubBudgetVC.swift; sourceTree = "<group>"; };
 		073401491B786B3E0065CF10 /* plus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = plus.jpg; sourceTree = "<group>"; };
 		0734014A1B786B3E0065CF10 /* minus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = minus.jpg; sourceTree = "<group>"; };
+		073401511B79D8030065CF10 /* TransTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				0734013F1B785A5C0065CF10 /* MaxBudgetVC.swift */,
 				073401411B785A8A0065CF10 /* DurationBudgetVC.swift */,
 				073401431B7862C10065CF10 /* AddSubBudgetVC.swift */,
+				073401511B79D8030065CF10 /* TransTableViewCell.swift */,
 			);
 			name = VC;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				073401001B78292C0065CF10 /* ParseLoginVC.swift in Sources */,
 				073401401B785A5C0065CF10 /* MaxBudgetVC.swift in Sources */,
 				073400FE1B78292C0065CF10 /* AppDelegate.swift in Sources */,
+				073401521B79D8030065CF10 /* TransTableViewCell.swift in Sources */,
 				073401421B785A8A0065CF10 /* DurationBudgetVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,6 +523,7 @@
 				073401191B78292D0065CF10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0734011A1B78292D0065CF10 /* Build configuration list for PBXNativeTarget "EasyBudgetTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +532,7 @@
 				0734011C1B78292D0065CF10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

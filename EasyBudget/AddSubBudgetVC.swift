@@ -17,6 +17,7 @@ class AddSubBudgetVC: UIViewController {
     @IBOutlet weak var budgetLabel: UILabel!
     @IBOutlet weak var logoutBtn: UIButton!
     @IBOutlet weak var restartBtn: UIButton!
+    @IBOutlet weak var tableRecords: UITableView!
     
     
     override func viewDidLoad() {
@@ -89,5 +90,10 @@ class AddSubBudgetVC: UIViewController {
     func dismissKeyboard(){
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
+    }
+    
+    /* Refreshes the content in the table */
+    func configureTable() {
+        
     }
 }
