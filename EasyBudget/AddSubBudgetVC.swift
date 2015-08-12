@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import Foundation
 
-class AddSubBudgetVC: UIViewController {
+class AddSubBudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var budgetOffsetField: UITextField!
     @IBOutlet weak var addBtn: UIButton!
     @IBOutlet weak var subtractBtn: UIButton!
@@ -18,12 +18,19 @@ class AddSubBudgetVC: UIViewController {
     @IBOutlet weak var logoutBtn: UIButton!
     @IBOutlet weak var restartBtn: UIButton!
     @IBOutlet weak var tableRecords: UITableView!
+    @IBOutlet weak var reasonField: UITextField!
     
+    var transactions: [String] = ["Test", "Test", "Test"]
+
     
     override func viewDidLoad() {
+        restartBtn.layer.cornerRadius = 10
+        logoutBtn.layer.cornerRadius = 10
         budgetOffsetField.keyboardType = UIKeyboardType.NumbersAndPunctuation
+        tableRecords.delegate = self
+        tableRecords.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         refreshLabel(0)
-        
+
         //Looks for single or multiple taps.
         var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
@@ -54,9 +61,14 @@ class AddSubBudgetVC: UIViewController {
             
             if error == nil {
                 var user = object as! PFObject
+                
+                // Set the budget in the cloud
                 var newBudget = offset + (user["budget"] as! Double)
                 self.budgetLabel.text = "$" + (NSString(format: "%.2f", newBudget) as String)
                 user["budget"] = newBudget
+                
+                // Set the reason in the cloud 
+                //user["reason"]
                 user.saveInBackground()
             } else {
                 println("Error: \(error!) \(error!.userInfo!)")
@@ -93,7 +105,24 @@ class AddSubBudgetVC: UIViewController {
     }
     
     /* Refreshes the content in the table */
-    func configureTable() {
+    func loadTransactions() {
+        
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell:UITableViewCell = self.tableRecords.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        cell.textLabel?.text = self.transactions[indexPath.row]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("You selected cell #\(indexPath.row)!")
         
     }
 }
