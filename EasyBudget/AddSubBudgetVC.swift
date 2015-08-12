@@ -20,13 +20,14 @@ class AddSubBudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableRecords: UITableView!
     @IBOutlet weak var reasonField: UITextField!
     
-    var transactions: [String] = ["Test", "Test", "Test"]
-
+    var transactions: [PFObject] = []
+    var items: [String] = ["Hi, ", "Trying to get", "this to work with", "Parse transactions"]
     
     override func viewDidLoad() {
         restartBtn.layer.cornerRadius = 10
         logoutBtn.layer.cornerRadius = 10
         budgetOffsetField.keyboardType = UIKeyboardType.NumbersAndPunctuation
+        loadTransactions()
         tableRecords.delegate = self
         tableRecords.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         refreshLabel(0)
@@ -38,18 +39,44 @@ class AddSubBudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     /* Updates and adds the offset in the cloud */
     @IBAction func addPressed(sender: UIButton) {
-        if !budgetOffsetField.text.isEmpty {
+        if !budgetOffsetField.text.isEmpty && !reasonField.text.isEmpty {
             var offset = (budgetOffsetField.text as NSString).doubleValue
+            addNewTransaction(offset, reason: reasonField.text)
             refreshLabel(offset)
         }
     }
     
     /* Updates and subtracts the offset in the cloud */
     @IBAction func subtractPressed(sender: UIButton) {
-        if !budgetOffsetField.text.isEmpty {
+        if !budgetOffsetField.text.isEmpty && !reasonField.text.isEmpty {
             var offset = (budgetOffsetField.text as NSString).doubleValue
+            addNewTransaction(-offset, reason: reasonField.text)
             refreshLabel(-offset)
         }
+    }
+    
+    /* Refreshes the content in the array for the table to load correctly */
+    func loadTransactions() {
+        var query = PFUser.query()
+        query!.whereKey("username", equalTo:PFUser.currentUser()!.username!)
+        query!.getFirstObjectInBackgroundWithBlock() {
+            (object: AnyObject?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+            }
+            else {
+                println(error)
+            }
+        }
+    }
+    
+    /* Takes the reason and offset, pair them and places them in the array */
+    func addNewTransaction (offset: Double, reason: String) {
+        var tempTrans = PFObject(className:"Transaction")
+        tempTrans["offset"] = offset
+        tempTrans["reason"] = reasonField.text
+        transactions.append(tempTrans)
     }
     
     /* Refreshes the cloud and label */
@@ -67,8 +94,7 @@ class AddSubBudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.budgetLabel.text = "$" + (NSString(format: "%.2f", newBudget) as String)
                 user["budget"] = newBudget
                 
-                // Set the reason in the cloud 
-                //user["reason"]
+                // Set the transactions in the cloud
                 user.saveInBackground()
             } else {
                 println("Error: \(error!) \(error!.userInfo!)")
@@ -104,20 +130,16 @@ class AddSubBudgetVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.endEditing(true)
     }
     
-    /* Refreshes the content in the table */
-    func loadTransactions() {
-        
-        
-    }
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.items.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableRecords.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel?.text = self.transactions[indexPath.row]
+        var temp = self.items[indexPath.row] as String
+        //cell.textLabel?.text = temp["reason"]?.stringValue
+        cell.textLabel?.text = temp
         return cell
     }
     
